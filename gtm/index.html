@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Simple Analytics</title>
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/app.css" />
+  </head>
+  <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-T6HX3HZ"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+      ></iframe
+    ></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <main>
+      <a href="/">
+        <svg
+          width="100px"
+          height="100px"
+          enable-background="new 0 0 100 100"
+          fill="#ff4f64"
+          version="1.0"
+          viewBox="0 0 100 100"
+          xml:space="preserve"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <rect x="20" y="53" width="10" height="30" />
+          <rect x="44" y="35" width="10" height="48" />
+          <rect x="68" y="18" width="10" height="65" /></svg
+      ></a>
+      <h2>Google Tag Manager</h2>
+      <p>A debugger for loading.</p>
+      <p>
+        <a href="https://example.com/" target="_blank" rel="nofollow noopener"
+          >An external link</a
+        >
+        for testing automated events.
+      </p>
+
+      <textarea readonly>Loading JavaScript...</textarea>
+
+      <p>
+        In the above console you should see <code>"before_gtm"</code> and
+        <code>"after_gtm"</code> event sent correctly.
+      </p>
+    </main>
+
+    <!-- Some test code for this page specifically -->
+    <script>
+      document.querySelector("textarea").value = "";
+
+      function log(type = "info", text) {
+        console[type](text);
+        document.querySelector(
+          "textarea"
+        ).value += `${type.toUpperCase()}: ${text}\n`;
+      }
+
+      function sendEvent(event) {
+        if (!window.sa_event) {
+          log("error", `Can't send "${event}" event, sa_event is not defined`);
+        } else {
+          log("info", `Start sending event "${event}"`);
+          sa_event(event, function () {
+            log("info", `"${event}" event sent correctly`);
+          });
+        }
+      }
+
+      sendEvent("before_gtm");
+
+      function gtmLoaded(ok) {
+        if (ok) {
+          log("info", "GTM script is loaded");
+
+          log("info", 'Sending "after_gtm" event in 3 seconds...');
+          setTimeout(() => {
+            sendEvent("after_gtm");
+          }, 3000);
+        } else {
+          log("error", "GTM script is blocked on your computer");
+        }
+      }
+    </script>
+
+    <!-- Google Tag Manager script -->
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.onerror = () => gtmLoaded(false);
+        j.onload = () => gtmLoaded(true);
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-T6HX3HZ");
+    </script>
+  </body>
+</html>
